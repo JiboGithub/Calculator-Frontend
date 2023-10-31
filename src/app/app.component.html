@@ -1,0 +1,55 @@
+<div class="pageContainer" ng-controller="CalculatorController" ng-init="initialize()">
+  <div class="calculatorContainer">
+      <div class="calculator">
+          <span class="title">Habeeb's<br>Calculator</span>
+          <div *ngIf="view === 'calc'">
+            <div class="operationContainer">
+              <span class="operation" *ngIf="!operationResult">
+                <span>{{firstValue}}</span>
+                <span>{{operator.label}}</span>
+                <span>{{secondValue}}</span>
+              </span>
+              <div class="operationResult" *ngIf="operationResult">
+                <span class="operation">
+                  <span>{{firstValue}}</span>
+                  <span>{{operator.label}}</span>
+                  <span>{{secondValue}}</span>
+                </span>
+                <span class="result">
+                  <span>=</span>
+                  <span>{{operationResult}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="actionContainer">
+              <button class="actionButton" (click)="deleteValue()">Delete</button>
+              <button class="actionButton" (click)="clearOperation()">Clear</button>
+              <button class="actionButton" (click)="toggleHistory()">History</button>
+            </div>
+            <div class="inputContainer">
+              <button class="button operatorButton" *ngFor="let operator of operators" (click)="setOperator(operator)">
+                {{operator.label}}
+              </button>
+
+              <button class="button" *ngFor="let value of values" (click)="setValue(value)">
+                {{value}}
+              </button>
+
+              <button class="button" style="grid-column: span 2; background-color: lightgreen; color: white;" (click)="calculate()">
+                =
+              </button>
+            </div>
+          </div>
+          <div class="historyContainer" *ngIf="view === 'history'">
+            <span class="historyContainerTitle" (click)="toggleHistory()">< History</span>
+            <span class="calcHistoryEntry" *ngFor="let calc of calcHistory">
+              <span class="entryOp">{{calc.firstValue}} {{getOperator(calc.operationType)}} {{calc.secondValue}}</span>
+              <span class="entryRes">= {{calc.result}}</span>
+            </span>
+          </div>
+      </div>
+  </div>
+  <div class="loaderContainer" *ngIf="appLoading">
+    <span class="loaderTitle">Habeeb's<br />Calculator<br /><span class="loader"></span></span>
+  </div>
+</div>
